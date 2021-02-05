@@ -7,7 +7,7 @@ public class Main {
 		
 		Scanner scan = new Scanner(System.in);
 		Controller controller = new Controller();	
-			
+		
 		while (true) {
 			
 			System.out.print("[1]추가 [2]수정 [3]삭제 [4]출력 [5]전체출력 [6]종료 : ");
@@ -28,28 +28,39 @@ public class Main {
 				stInsert.insert(new StudentVO(id , num , name));
 				
 			}
+			
 			else if (selectMenu == 2) {
-				/*
-				 *  # 구현해 보시오.
-				 *  
-				 *  - 아이디를 입력받아서 해당되는 아이디가 있으면
-				 *    이름과 번호를 변경할 수 있는 기능
-				 * 
-				 * */
-			}
-			else if (selectMenu == 3) {
-				System.out.print("아이디를 입력하세요 : ");
-				String delId = scan.next();
+				System.out.print("수정할 아이디를 입력하세요 : ");
+				String changeId = scan.next();
+				String changeKey = "";
 				StudentSelectAll stSelAll = controller.getSelectAll();
+				for (String key : stSelAll.allSelect().keySet()) {
+					if(changeId.equals(key)) {
+						changeKey = key;
+					}
+				}
+				if(changeKey.equals("")) {System.out.println("입력하신 아이디는 존재하지 않습니다."); continue;}
+				System.out.println("변경할 번호를 입력하세요 : ");
+				int changeNum = scan.nextInt();
+				System.out.print("변경할 이름을 입력하세요 : ");
+				String changeName = scan.next();
 				
-				
-				/*
-				 *  # 구현해 보시오.
-				 *  
-				 *  - 아이디를 입력받아서 해당되는 아이디가 있으면 삭제
-				 * 
-				 * */
+				stSelAll.allSelect().put(changeKey, new StudentVO(changeKey, changeNum, changeName));
 			}
+			
+			else if (selectMenu == 3) {
+				System.out.print("삭제할 아이디를 입력하세요 : ");
+				String delId = scan.next();
+				String delKey = "";
+				StudentSelectAll stSelAll = controller.getSelectAll();
+				for (String key : stSelAll.allSelect().keySet()) {
+					if(delId.equals(key)) {
+						delKey = key;
+					}
+				}
+				stSelAll.allSelect().remove(delKey);
+			}
+			
 			else if (selectMenu == 4) {
 				
 				System.out.print("아이디를 입력하세요 : ");
